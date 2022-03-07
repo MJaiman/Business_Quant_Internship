@@ -1,0 +1,138 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Business Quant</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+        <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>  
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<style>
+    p{
+        margin: 0 0 0px;
+
+    }
+</style>
+<script type="text/javascript" language="javascript">
+
+function selects(){  
+            var ele=document.getElementsByName('pos');  
+            for(var i=0; i<ele.length; i++){  
+                if(ele[i].type=='checkbox')  
+                    ele[i].checked=true;  
+            }  
+        } 
+        
+        function deSelect(){  
+                var ele=document.getElementsByName('pos');  
+                for(var i=0; i<ele.length; i++){  
+                    if(ele[i].type=='checkbox')  
+                        ele[i].checked=false;  
+                      
+                }  
+            }  
+
+$(document).ready( function () {
+  $.fn.dataTable.ext.search.push(
+    function( settings, searchData, index, rowData, counter ) {
+      var positions = $('input:checkbox[name="pos"]:checked').map(function() {
+        return this.value;
+      }).get();
+   
+      if (positions.length === 0) {
+        return true;
+      }
+      
+      let found = false;
+      
+      positions.forEach(function(el) {
+        console.log(el)
+        if (searchData[0].includes(el)) {
+          found = true;
+        }
+      });
+      
+      return found;
+    }
+  );
+
+  var table = $('#example').DataTable();
+  
+ $('input:checkbox').on('change', function () {
+    table.draw();
+ });
+
+} );
+
+</script>
+
+    </head>
+
+    
+    <body>
+        <h3 align="center">Business Quant</h3>
+        <div class="container" style="display: flex;flex-direction: row;">
+
+            <div id="position" style="display:flex;flex-direction: column; width: 150px;">
+                <p><input type="checkbox" onclick= 'selects()' name= "pos" value=""> Select All</p>
+                <p><input type="checkbox" onclick= 'deSelect()' name= "pos" value=""> Deselect All</p>
+
+                <p><input type="checkbox" name="pos" value="Aloe Vera"> Aloe Vera</p>
+                <p><input type="checkbox" name="pos" value="Apple"> Apple</p>
+                <p><input type="checkbox" name="pos" value="Asparagus"> Asparagus</p>
+                <p><input type="checkbox" name="pos" value="Avocados"> Avocados</p>
+                <p><input type="checkbox" name="pos" value="Blueberries"> Blueberries</p>
+                <p><input type="checkbox" name="pos" value="Brinjal"> Brinjal</p>
+                <p><input type="checkbox" name="pos" value="Brocolli"> Brocolli</p>
+                <p><input type="checkbox" name="pos" value="Carrot"> Carrot</p>
+                <p><input type="checkbox" name="pos" value="Cauliflower"> Cauliflower</p>
+                <p><input type="checkbox" name="pos" value="Ginger"> Ginger</p>
+                <p><input type="checkbox" name="pos" value="Hibuscus"> Hibuscus</p>
+                <p><input type="checkbox" name="pos" value="Lychee"> Lychee</p>
+                <p><input type="checkbox" name="pos" value="Money Plant"> Money Plant</p>
+                <p><input type="checkbox" name="pos" value="Onions"> Onions</p>
+                <p><input type="checkbox" name="pos" value="Orange"> Orange</p>
+                <p><input type="checkbox" name="pos" value="Palm"> Palm</p>
+                <p><input type="checkbox" name="pos" value="Radish"> Radish</p>
+                <p><input type="checkbox" name="pos" value="Rose"> Rose</p>
+                <p><input type="checkbox" name="pos" value="Spinach"> Spinach</p>
+                <p><input type="checkbox" name="pos" value="Strawberry"> Strawberry</p>
+                <p><input type="checkbox" name="pos" value="Tomato"> Tomato</p>
+              </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">DataTable</div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table id="example" class="table table-bordered table-striped">
+                            <thead>
+                                
+                                <tr>
+                                    {% for col in column_names %}
+                                    <th>{{col}}</th>
+                                    {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for row in row_data %}
+                                <tr>
+                                    {% for col, row_ in zip(column_names, row) %}
+                                    {% if col == link_column %}
+                                    {% else %}
+                                    <td>{{row_}}</td>
+                                    {% endif %}
+                                    {% endfor %}
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+    </body>
+</html>
